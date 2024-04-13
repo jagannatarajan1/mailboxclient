@@ -3,13 +3,19 @@ import { Button } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import { useNavigate } from "react-router-dom";
+import { loginSliceAction } from "./loginSlice";
+
 import "./login.css";
+import { useDispatch } from "react-redux";
 const Login = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [confirmpassword, setconfrimpassword] = useState("");
   const [login, setlogin] = useState(false);
   let url;
+  const nav = useNavigate();
+  const dispatch = useDispatch();
 
   const emailChangeHandler = (event) => {
     setemail(event.target.value);
@@ -24,7 +30,9 @@ const Login = () => {
     setlogin((preState) => !preState);
   };
   const forgothandler = () => {};
-  const formDataPresent = email && password && confirmpassword;
+  const formDataPresent = login
+    ? email && password
+    : email && password && confirmpassword;
   const formhandler = async (event) => {
     event.preventDefault();
 
@@ -52,8 +60,11 @@ const Login = () => {
         },
       });
       const data = await response.json();
+
       console.log(data);
       console.log("user successfully login");
+      dispatch(loginSliceAction.logIn(data));
+      nav("/");
     } catch (error) {
       throw new Error(error);
     }
