@@ -1,0 +1,27 @@
+.no-border {
+  border: 0;
+  box-shadow: none;
+}
+
+.no-border:focus {
+  outline-style: none;
+  box-shadow: none;
+}
+.ql-toolbar.ql-snow {
+  width: 100%;
+  /* margin-left: 0; */
+  /* padding-left: 0%; */
+  /* border: none !important; */
+}
+/* .quill-wrapper .ql-toolbar {
+  border: none; 
+}
+.quill-wrapper .ql-container {
+  border: none; 
+} */
+.quill .ql-editor {
+  border: none !important;
+}
+.foms {
+  margin-bottom: -1px;
+}

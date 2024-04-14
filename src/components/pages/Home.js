@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { Container } from "react-bootstrap";
+import Email from "./Email";
 
 const Home = () => {
   //   const logoutHandler = () => {};
@@ -35,6 +36,7 @@ const Home = () => {
           </Navbar.Collapse> */}
         </Container>
       </Navbar>
+      <Email />
     </React.Fragment>
   );
 };
