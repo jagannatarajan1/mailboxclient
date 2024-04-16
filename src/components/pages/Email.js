@@ -11,6 +11,7 @@ const Email = () => {
   const [subject, setSubject] = useState("");
   const [error, setError] = useState("");
   const emailselector = useSelector((state) => state.login.email);
+  const fullEmail = emailselector + "@gmail.com";
 
   const emailHandler = (event) => {
     setEmail(event.target.value);
@@ -31,14 +32,16 @@ const Email = () => {
     setError("");
 
     const emailData = {
+      senderEmail: fullEmail,
       email: email,
       subject: subject,
       message: value,
     };
+    const receiver = email.replace("@gmail.com", "");
 
     try {
       const response = await fetch(
-        `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailselector}.json`,
+        `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${receiver}.json`,
         {
           method: "POST",
           body: JSON.stringify(emailData),

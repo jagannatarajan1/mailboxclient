@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { Container } from "react-bootstrap";
 import Email from "./Email";
+import ViewEmails from "./viewEmails";
 
 const Home = () => {
   //   const logoutHandler = () => {};
@@ -37,6 +38,7 @@ const Home = () => {
         </Container>
       </Navbar>
       <Email />
+      <ViewEmails />
     </React.Fragment>
   );
 };

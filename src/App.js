@@ -5,6 +5,7 @@ import Login from "./components/login/login";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./components/pages/Home";
 import { useSelector } from "react-redux";
+// import ViewEmails from "./components/pages/viewEmails";
 function App() {
   const loginSelector = useSelector((state) => state.login.loginStatus);
   return (
@@ -15,6 +16,7 @@ function App() {
           element={loginSelector ? <Home /> : <Navigate to="/loginpage" />}
         ></Route>
         <Route path="/loginpage" element={<Login />} />
+        {/* <Route/> */}
       </Routes>
     </React.Fragment>
   );
