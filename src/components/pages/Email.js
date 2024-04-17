@@ -36,6 +36,7 @@ const Email = () => {
       email: email,
       subject: subject,
       message: value,
+      readedMessage: false,
     };
     const receiver = email.replace("@gmail.com", "");
 

@@ -5,3 +5,31 @@
 .optionlist {
   margin-left: -22px;
 }
+
+.paddingEmail {
+  /* padding-left: 7%;
+   */
+  text-align: center;
+}
+.blueCircle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  display: inline-block;
+}
+.singleEmail-false {
+  background-color: rgb(246, 243, 243);
+  color: black;
+  font-weight: 600;
+}
+.singleEmail-false:hover {
+  background-color: rgb(220, 220, 220);
+}
+.unReadedMessage {
+  display: inline-block;
+  width: 40px;
+  height: 25px;
+  border-radius: 15%;
+  color: white;
+}
