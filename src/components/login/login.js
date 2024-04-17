@@ -63,8 +63,10 @@ const Login = () => {
 
       console.log(data);
       console.log("user successfully login");
-      dispatch(loginSliceAction.logIn(data));
-      nav("/");
+      if (response.ok) {
+        dispatch(loginSliceAction.logIn(data));
+        nav("/");
+      }
     } catch (error) {
       throw new Error(error);
     }

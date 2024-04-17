@@ -7,6 +7,7 @@ import Home from "./components/pages/Home";
 import { useSelector } from "react-redux";
 import Email from "./components/pages/Email";
 import ViewMessage from "./components/pages/viewMessage";
+import SendEmail from "./components/pages/sendedEmail";
 function App() {
   const loginSelector = useSelector((state) => state.login.loginStatus);
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/loginpage" element={<Login />} />
         <Route path="/composeEmail" element={<Email />} />
         <Route path="/openEmail" element={<ViewMessage />} />
+        <Route path="/sendedEmail" element={<SendEmail />} />
       </Routes>
     </React.Fragment>
   );

@@ -42,7 +42,7 @@ const Email = () => {
 
     try {
       const response = await fetch(
-        `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${receiver}.json`,
+        `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${receiver}/ReceivedMail.json`,
         {
           method: "POST",
           body: JSON.stringify(emailData),
@@ -60,6 +60,18 @@ const Email = () => {
       setEmail("");
       setSubject("");
       setValue("");
+      const sendedMail = await fetch(
+        `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailselector}/Sended.json`,
+        {
+          method: "POST",
+          body: JSON.stringify(emailData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const dataOfSendedMail = sendedMail.json();
+      console.log(dataOfSendedMail);
     } catch (error) {
       console.error("Error:", error.message);
       setError("Failed to send email. Please try again later.");
