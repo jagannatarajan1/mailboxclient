@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialData = {
   emailData: {},
   totalUnreadedMessage: 0,
+  refresh: false,
 };
 const emailSlice = createSlice({
   name: "emailSlice",
@@ -12,6 +13,9 @@ const emailSlice = createSlice({
     },
     unreadedMessage: (state, action) => {
       state.totalUnreadedMessage = action.payload;
+    },
+    refreshScreen: (state, action) => {
+      state.refresh = !state.refresh;
     },
   },
 });

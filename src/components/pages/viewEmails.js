@@ -10,11 +10,13 @@ import { MdInbox } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { IoMdSend } from "react-icons/io";
 import { emailSliceAction } from "./emailSlice";
+import { Button } from "react-bootstrap";
 
 const ViewEmails = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const emailgetSelector = useSelector((state) => state.login.email);
+  const refreshSelector = useSelector((state) => state.email.refresh);
 
   const [receiverData, setReceiverData] = useState([]);
   const selectorunReadedMessage = useSelector(
@@ -25,6 +27,23 @@ const ViewEmails = () => {
   const composeHandler = () => {
     nav("/composeEmail");
   };
+  const delectHandler = async (id) => {
+    try {
+      const response = await fetch(
+        `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailgetSelector}/${id}.json`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
+      dispatch(emailSliceAction.refreshScreen());
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
   const viewFullMessageHandler = async (data) => {
     dispatch(emailSliceAction.viewFullMessage(data));
     nav("/openEmail");
@@ -34,7 +53,7 @@ const ViewEmails = () => {
         {
           method: "PUT",
           body: JSON.stringify({
-            senderEmail: data.enderEmail,
+            senderEmail: data.senderEmail,
             email: data.email,
             subject: data.subject,
             message: data.message,
@@ -82,67 +101,82 @@ const ViewEmails = () => {
       }
     };
     fetchDataFunction();
-  }, [emailSelector, dispatch]);
+  }, [emailSelector, dispatch, refreshSelector]);
 
   return (
-    <Container>
-      <Row>
-        <Col xs={3} sm={3} md={2} lg={2} xl={2} xxl={2}>
-          <ListGroup
-            defaultActiveKey="#link1"
-            className="border  border-2 border-dark-subtle paddingEmail"
-          >
-            <ListGroup.Item
-              action
-              onClick={composeHandler}
-              className="bordercss "
+    <React.Fragment>
+      <Container>
+        <Row>
+          <Col xs={3} sm={3} md={2} lg={2} xl={2} xxl={2}>
+            <ListGroup
+              defaultActiveKey="#link1"
+              className="border  border-2 border-dark-subtle paddingEmail"
             >
-              <span className="p-2 ">
-                <LuPencil size={20} />
-              </span>
-              Compose
-            </ListGroup.Item>
-            <ListGroup.Item
-              action
-              onClick={alertClicked}
-              className="bordercss "
-            >
-              <span className="p-2">
-                <MdInbox size={20} />
-              </span>
-              Indox{" "}
-              <span className="unReadedMessage bg-primary">
-                {selectorunReadedMessage}
-              </span>
-            </ListGroup.Item>
-            <ListGroup.Item action onClick={alertClicked} className="bordercss">
-              <span className="p-2">
-                <IoMdSend size={20} />
-              </span>
-              Sent
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
-        <Col>
-          <ListGroup defaultActiveKey="#link1" className=" optionlist">
-            {receiverData.map((receiveData) => (
               <ListGroup.Item
                 action
-                key={receiveData.id}
-                className={`singleEmail-${receiveData.readedMessage}`}
-                onClick={() => viewFullMessageHandler(receiveData)}
+                onClick={composeHandler}
+                className="bordercss "
               >
-                {!receiveData.readedMessage && (
-                  <span className="blueCircle bg-primary me-2"></span>
-                )}
-                <span className="pe-5">{receiveData.senderEmail}</span>
-                {receiveData.subject}
+                <span className="p-2 ">
+                  <LuPencil size={20} />
+                </span>
+                Compose
               </ListGroup.Item>
-            ))}
-          </ListGroup>
-        </Col>
-      </Row>
-    </Container>
+              <ListGroup.Item
+                action
+                onClick={alertClicked}
+                className="bordercss "
+              >
+                <span className="p-2">
+                  <MdInbox size={20} />
+                </span>
+                Indox{" "}
+                <span className="unReadedMessage bg-primary">
+                  {selectorunReadedMessage}
+                </span>
+              </ListGroup.Item>
+              <ListGroup.Item
+                action
+                onClick={alertClicked}
+                className="bordercss"
+              >
+                <span className="p-2">
+                  <IoMdSend size={20} />
+                </span>
+                Sent
+              </ListGroup.Item>
+            </ListGroup>
+          </Col>
+          <Col>
+            <ListGroup defaultActiveKey="#link1" className="optionlist">
+              {receiverData.map((receiveData) => (
+                <div key={receiveData.id} className="d-flex ">
+                  <ListGroup.Item
+                    action
+                    className={`singleEmail-${receiveData.readedMessage}`}
+                    onClick={() => viewFullMessageHandler(receiveData)}
+                  >
+                    {!receiveData.readedMessage && (
+                      <span className="blueCircle bg-primary me-2"></span>
+                    )}
+                    <span className="gmailpadding">
+                      {receiveData.senderEmail}
+                    </span>
+                    <span> {receiveData.subject}</span>
+                  </ListGroup.Item>
+                  <Button
+                    variant="danger"
+                    onClick={() => delectHandler(receiveData.id)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              ))}
+            </ListGroup>
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
   );
 };
 
