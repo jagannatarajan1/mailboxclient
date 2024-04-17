@@ -19,11 +19,12 @@ const ViewEmails = () => {
   const refreshSelector = useSelector((state) => state.email.refresh);
 
   const [receiverData, setReceiverData] = useState([]);
+  const [timeoutRefresh, settimeoutRefresh] = useState(false);
+
   const selectorunReadedMessage = useSelector(
     (state) => state.email.totalUnreadedMessage
   );
   const emailSelector = useSelector((state) => state.login.email);
-  console.log(receiverData);
   const composeHandler = () => {
     nav("/composeEmail");
   };
@@ -84,9 +85,9 @@ const ViewEmails = () => {
           `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailSelector}/ReceivedMail.json`
         );
         const data = await response.json();
-        console.log(data);
         const fetchedData = [];
         let totalUnreadedEmail = 0;
+        console.log("useeffffecttt");
         for (const key in data) {
           fetchedData.push({
             id: key,
@@ -96,15 +97,18 @@ const ViewEmails = () => {
             totalUnreadedEmail += 1;
           }
         }
-        console.log(totalUnreadedEmail);
         dispatch(emailSliceAction.unreadedMessage(totalUnreadedEmail));
         setReceiverData(fetchedData);
       } catch (error) {
-        throw new Error(error);
+        console.error("Error fetching emails:", error);
       }
     };
     fetchDataFunction();
-  }, [emailSelector, dispatch, refreshSelector]);
+    const intervalId = setInterval(() => {
+      settimeoutRefresh((pre) => !pre);
+    }, 2000);
+    return () => clearInterval(intervalId);
+  }, [emailSelector, dispatch, refreshSelector, timeoutRefresh]);
 
   return (
     <React.Fragment>

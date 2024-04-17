@@ -36,10 +36,6 @@ const Login = () => {
   const formhandler = async (event) => {
     event.preventDefault();
 
-    console.log(password);
-    console.log(confirmpassword);
-    console.log(email);
-
     if (login) {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAS3lIYdA972RLHh9zfb_CVp42aWxpVX3w";
