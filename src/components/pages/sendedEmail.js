@@ -10,11 +10,12 @@ import { MdInbox } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { IoMdSend } from "react-icons/io";
 import { emailSliceAction } from "./emailSlice";
+import { useApi } from "../customHooks/CustomHooks";
 
 const SendEmail = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
-  const [receiverData, setReceiverData] = useState([]);
+  // const [receiverData, setReceiverData] = useState([]);
 
   const emailgetSelector = useSelector((state) => state.login.email);
   const selectorunReadedMessage = useSelector(
@@ -33,28 +34,31 @@ const SendEmail = () => {
   const indoxHandler = () => {
     nav("/");
   };
-  useEffect(() => {
-    const fetchDataFunction = async () => {
-      try {
-        const response = await fetch(
-          `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailgetSelector}/Sended.json`
-        );
-        const data = await response.json();
-        console.log(data);
-        const fetchedData = [];
-        for (const key in data) {
-          fetchedData.push({
-            id: key,
-            ...data[key],
-          });
-        }
-        setReceiverData(fetchedData);
-      } catch (error) {
-        throw new Error(error);
-      }
-    };
-    fetchDataFunction();
-  }, [emailgetSelector]);
+  const { receiverData } = useApi(
+    `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailgetSelector}/Sended.json`
+  );
+  // useEffect(() => {
+  //   const fetchDataFunction = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailgetSelector}/Sended.json`
+  //       );
+  //       const data = await response.json();
+  //       console.log(data);
+  //       const fetchedData = [];
+  //       for (const key in data) {
+  //         fetchedData.push({
+  //           id: key,
+  //           ...data[key],
+  //         });
+  //       }
+  //       setReceiverData(fetchedData);
+  //     } catch (error) {
+  //       throw new Error(error);
+  //     }
+  //   };
+  //   fetchDataFunction();
+  // }, [emailgetSelector]);
 
   return (
     <React.Fragment>
@@ -119,9 +123,6 @@ const SendEmail = () => {
                         xxl={4}
                         className="me-3"
                       >
-                        {!receiveData.readedMessage && (
-                          <span className="blueCircle bg-primary me-2"></span>
-                        )}
                         <span>{receiveData.senderEmail}</span>
                       </Col>
                       <Col>

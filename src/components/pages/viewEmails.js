@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
+import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -11,15 +12,16 @@ import { useNavigate } from "react-router-dom";
 import { IoMdSend } from "react-icons/io";
 import { emailSliceAction } from "./emailSlice";
 import { Button } from "react-bootstrap";
+import { useApi } from "../customHooks/CustomHooks";
 
 const ViewEmails = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const emailgetSelector = useSelector((state) => state.login.email);
-  const refreshSelector = useSelector((state) => state.email.refresh);
+  // const refreshSelector = useSelector((state) => state.email.refresh);
 
-  const [receiverData, setReceiverData] = useState([]);
-  const [timeoutRefresh, settimeoutRefresh] = useState(false);
+  // const [receiverData, setReceiverData] = useState([]);
+  // const [timeoutRefresh, settimeoutRefresh] = useState(false);
 
   const selectorunReadedMessage = useSelector(
     (state) => state.email.totalUnreadedMessage
@@ -78,37 +80,42 @@ const ViewEmails = () => {
   const alertClicked = () => {
     alert("You clicked the ListGroupItem");
   };
-  useEffect(() => {
-    const fetchDataFunction = async () => {
-      try {
-        const response = await fetch(
-          `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailSelector}/ReceivedMail.json`
-        );
-        const data = await response.json();
-        const fetchedData = [];
-        let totalUnreadedEmail = 0;
-        console.log("useeffffecttt");
-        for (const key in data) {
-          fetchedData.push({
-            id: key,
-            ...data[key],
-          });
-          if (!data[key].readedMessage) {
-            totalUnreadedEmail += 1;
-          }
-        }
-        dispatch(emailSliceAction.unreadedMessage(totalUnreadedEmail));
-        setReceiverData(fetchedData);
-      } catch (error) {
-        console.error("Error fetching emails:", error);
-      }
-    };
-    fetchDataFunction();
-    const intervalId = setInterval(() => {
-      settimeoutRefresh((pre) => !pre);
-    }, 2000);
-    return () => clearInterval(intervalId);
-  }, [emailSelector, dispatch, refreshSelector, timeoutRefresh]);
+  const { receiverData } = useApi(
+    `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailSelector}/ReceivedMail.json`
+  );
+
+  console.log(receiverData);
+  // useEffect(() => {
+  //   const fetchDataFunction = async () => {
+  //     try {
+  //       const response = await fetch(s
+  //         `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailSelector}/ReceivedMail.json`
+  //       );
+  //       const data = await response.json();
+  //       const fetchedData = [];
+  //       let totalUnreadedEmail = 0;
+  //       console.log("useeffffecttt");
+  //       for (const key in data) {
+  //         fetchedData.push({
+  //           id: key,
+  //           ...data[key],
+  //         });
+  //         if (!data[key].readedMessage) {
+  //           totalUnreadedEmail += 1;
+  //         }
+  //       }
+  //       dispatch(emailSliceAction.unreadedMessage(totalUnreadedEmail));
+  //       setReceiverData(fetchedData);
+  //     } catch (error) {
+  //       console.error("Error fetching emails:", error);
+  //     }
+  //   };
+  //   fetchDataFunction();
+  //   const intervalId = setInterval(() => {
+  //     settimeoutRefresh((pre) => !pre);
+  //   }, 2000);
+  //   return () => clearInterval(intervalId);
+  // }, [emailSelector, dispatch, refreshSelector, timeoutRefresh]);
 
   return (
     <React.Fragment>
