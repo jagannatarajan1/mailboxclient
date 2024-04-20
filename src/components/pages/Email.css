@@ -25,3 +25,15 @@
 .foms {
   margin-bottom: -1px;
 }
+
+.quill {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 450px;
+  /* min-height: 450; */
+}
+/* @media (min-width: 2000px) {
+  .quill {
+    height: auto;
+  }
+} */

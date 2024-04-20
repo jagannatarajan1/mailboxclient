@@ -1,6 +1,7 @@
 .forgotPasssword {
   margin-left: 24%;
   color: blue;
+  cursor: pointer;
 }
 .already {
   margin-top: -160px;

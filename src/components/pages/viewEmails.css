@@ -34,6 +34,10 @@
 .gmailpadding {
   margin-right: 50px;
 }
+.deletebtn {
+  width: 100px;
+  height: 40px;
+}
 @media (min-width: 1199px) {
   .sentCss {
     padding-right: 60px;

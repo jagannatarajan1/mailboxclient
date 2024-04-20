@@ -185,7 +185,8 @@ const ViewEmails = () => {
                     </Row>
                   </ListGroup.Item>
                   <Button
-                    variant="danger"
+                    variant="danger "
+                    className="deletebtn"
                     onClick={() => delectHandler(receiveData.id)}
                   >
                     Delete

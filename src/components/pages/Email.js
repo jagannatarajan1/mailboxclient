@@ -101,7 +101,7 @@ const Email = () => {
 
   return (
     <React.Fragment>
-      <Container>
+      <Container className="mt-4">
         <Form>
           <InputGroup className="mb-3 no-border">
             <InputGroup.Text id="basic-addon1" className="no-border">
@@ -132,11 +132,13 @@ const Email = () => {
             value={value}
             onChange={setValue}
             className="quill"
-            style={{
-              display: "flex",
-              flexDirection: "column-reverse",
-              height: "400px",
-            }}
+            id="quillId"
+            // style={{
+            //   display: "flex",
+            //   flexDirection: "column-reverse",
+            //   height: "auto",
+
+            // }}
           />
           {error && <p className="error">{error}</p>}
           <Button className="ps-4 pe-4" onClick={formHandler}>

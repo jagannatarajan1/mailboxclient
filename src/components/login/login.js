@@ -29,7 +29,9 @@ const Login = () => {
   const already = () => {
     setlogin((preState) => !preState);
   };
-  const forgothandler = () => {};
+  const forgothandler = () => {
+    nav("/forgetPassword");
+  };
   const formDataPresent = login
     ? email && password
     : email && password && confirmpassword;
@@ -62,6 +64,8 @@ const Login = () => {
       if (response.ok) {
         dispatch(loginSliceAction.logIn(data));
         nav("/");
+      } else {
+        alert(data.error.message);
       }
     } catch (error) {
       throw new Error(error);
