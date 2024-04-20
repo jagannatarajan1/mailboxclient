@@ -77,11 +77,9 @@ const ViewEmails = () => {
     }
   };
 
-  const alertClicked = () => {
-    alert("You clicked the ListGroupItem");
-  };
   const { receiverData } = useApi(
-    `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailSelector}/ReceivedMail.json`
+    `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailSelector}/ReceivedMail.json`,
+    true
   );
 
   console.log(receiverData);
@@ -119,7 +117,7 @@ const ViewEmails = () => {
 
   return (
     <React.Fragment>
-      <Container>
+      <Container className="mt-5">
         <Row>
           <Col xs={3} sm={3} md={2} lg={2} xl={2} xxl={2}>
             <ListGroup
@@ -129,18 +127,14 @@ const ViewEmails = () => {
               <ListGroup.Item
                 action
                 onClick={composeHandler}
-                className="bordercss "
+                className="bordercss composeCss"
               >
                 <span className="p-2 ">
                   <LuPencil size={20} />
                 </span>
                 <span>Compose</span>
               </ListGroup.Item>
-              <ListGroup.Item
-                action
-                onClick={alertClicked}
-                className="bordercss "
-              >
+              <ListGroup.Item action className="bordercss ">
                 <span className="p-2">
                   <MdInbox size={20} />
                 </span>
@@ -152,7 +146,7 @@ const ViewEmails = () => {
               <ListGroup.Item
                 action
                 onClick={sendedMailHandler}
-                className="bordercss"
+                className="bordercss sentCss"
               >
                 <span className="p-2">
                   <IoMdSend size={20} />

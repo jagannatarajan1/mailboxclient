@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -35,7 +35,8 @@ const SendEmail = () => {
     nav("/");
   };
   const { receiverData } = useApi(
-    `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailgetSelector}/Sended.json`
+    `https://mailboxclient-5ed6c-default-rtdb.firebaseio.com/Persons/${emailgetSelector}/Sended.json`,
+    false
   );
   // useEffect(() => {
   //   const fetchDataFunction = async () => {
@@ -62,7 +63,7 @@ const SendEmail = () => {
 
   return (
     <React.Fragment>
-      <Container>
+      <Container className="mt-5">
         <Row>
           <Col xs={3} sm={3} md={2} lg={2} xl={2} xxl={2}>
             <ListGroup
@@ -72,7 +73,7 @@ const SendEmail = () => {
               <ListGroup.Item
                 action
                 onClick={composeHandler}
-                className="bordercss "
+                className="bordercss composeCss"
               >
                 <span className="p-2 ">
                   <LuPencil size={20} />
@@ -94,7 +95,7 @@ const SendEmail = () => {
               </ListGroup.Item>
               <ListGroup.Item
                 action
-                className="bordercss"
+                className="bordercss sentCss"
                 onClick={sendedMailHandler}
               >
                 <span className="p-2">

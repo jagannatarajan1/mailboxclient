@@ -3,10 +3,9 @@ import { useDispatch } from "react-redux";
 import { emailSliceAction } from "../pages/emailSlice";
 import { useSelector } from "react-redux";
 
-export const useApi = (url) => {
+export const useApi = (url, activerefresh) => {
   const dispatch = useDispatch();
   const [receiverData, setReceiverData] = useState([]);
-  const emailSelector = useSelector((state) => state.login.email);
   const refreshSelector = useSelector((state) => state.email.refresh);
 
   useEffect(() => {
@@ -35,9 +34,11 @@ export const useApi = (url) => {
 
     fetchDataFunction();
 
-    const intervalId = setInterval(fetchDataFunction, 2000);
-    return () => clearInterval(intervalId);
-  }, [url, dispatch, refreshSelector]);
+    if (activerefresh) {
+      const intervalId = setInterval(fetchDataFunction, 2000);
+      return () => clearInterval(intervalId);
+    }
+  }, [url, dispatch, refreshSelector, activerefresh]);
 
   return { receiverData };
 };

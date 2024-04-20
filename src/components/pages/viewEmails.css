@@ -34,3 +34,11 @@
 .gmailpadding {
   margin-right: 50px;
 }
+@media (min-width: 1199px) {
+  .sentCss {
+    padding-right: 60px;
+  }
+  .composeCss {
+    padding-right: 23px;
+  }
+}

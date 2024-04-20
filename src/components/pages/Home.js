@@ -1,39 +1,24 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import ViewEmails from "./viewEmails";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  //   const logoutHandler = () => {};
+  const nav = useNavigate();
+  const logoutHandler = () => {
+    localStorage.clear();
+    nav("/loginpage");
+  };
   return (
     <React.Fragment>
       <Navbar>
         <Container>
-          <Navbar.Brand>Welcome to Expense Tracker!!!</Navbar.Brand>
-          {/* <Navbar.Collapse className="justify-content-end">
-            <div className="bgprofilecolor">
-              <Navbar.Text>
-                Your profile is Incomplete
-                {/* <NavLink
-                    to="/yourprofile"
-                    style={({ isActive, isPending, isTransitioning }) => {
-                      return {
-                        padding: isPending ? "1px" : "2px",
-                        fontWeight: isActive ? "bold" : "",
-                        color: isPending ? "red" : "blue",
-                        viewTransitionName: isTransitioning ? "slide" : "",
-                        Hover: "red",
-                      };
-                    }}
-                  >
-                    Complete Now
-                  </NavLink> */}
-          {/* </Navbar.Text> */}
-          {/* </div>
-            <Button className="ms-3" onClick={logoutHandler}>
-              Logout
-            </Button>
-          </Navbar.Collapse> */}
+          <Navbar.Brand>Welcome to MailChat</Navbar.Brand>
+
+          <Button className="ms-3" onClick={logoutHandler}>
+            Logout
+          </Button>
         </Container>
       </Navbar>
       <ViewEmails />
